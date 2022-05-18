@@ -1,23 +1,22 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from matplotlib import dates
 from django.template import loader
-
-from .models import users
+from django.shortcuts import render
+from .models import Users
 
 def index(request):
-    list_users = users.objects.all()
+
+    list_Users = Users.objects.all()
     template = loader.get_template('apps/index.html')
     context = {
-        'list_users': list_users,
+        'list_Users': list_Users,
     }
-    return HttpResponse("Bienvenue monsieur %s" %list_users.noms)
+    return HttpResponse(template.render(context, request))
 
-def users(request):
-    list_users = users.objects.all()
-    template = loader.get_template('apps/users.html')
+def Users(request):
+    list_Users = Users.objects.all()
+    template = loader.get_template('apps/Users.html')
     context = {
-        'list_users': list_users,
+        'list_Users': list_Users,
     }
     return HttpResponse(template.render(context, request))
 
