@@ -1,0 +1,6 @@
+<h1>{{users.nom}}</h1>
+<ul>
+{% for session in users.sessions_set.all %}
+    <li>{{ session.id }}</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,28 @@
+{% if list_users %}
+    <ul>
+    {% for users in list_users %}
+        <li><a href="/apps/{{ user.id }}/">{{ user.prenom}} {{ user.nom }} {{ user.date_create}}</a></li>
+    {% endfor %}
+    </ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Voici l'onglet Apps</p>
+{% endif %}
+
+{% if list_sessions %}
+    <ul>
+    {% for session in list_sessions %}
+        <li><a href="/apps/{{ session.id }}/">{{ session.create_date }} {{ session.user_id }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>liste session is not available.</p>
+{% endif %}
+
+<h1>{{ user.prenom }}</h1>
+<ul>
+{% for session in user.session_set.all %}
+    <li>{{ session.id }}</li>
+{% endfor %}
+</ul>
