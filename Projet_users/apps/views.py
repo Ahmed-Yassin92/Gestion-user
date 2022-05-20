@@ -1,11 +1,9 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
-from psutil import users
 
 from .models import User, Sessions
-
-
+from .formulaire import form_log
 
 def index (request):
     list_users = User.objects.all()
@@ -37,3 +35,16 @@ def detail (request, user_id):
     return render(request, 'apps/detail.html', {'users': users})
    # return HttpResponse('hello you are in the details page %s ' % user_id)
     
+def get_name(request):
+    
+    if request.method == 'POST':
+        form = form_log(request.POST)
+        if form.is_valid():
+
+            return HttpResponseRedirect('/Merci/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = form_log()
+
+    return render(request, 'inscription.html', {'form': form})
