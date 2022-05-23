@@ -1,0 +1,17 @@
+<form action="/apps/profil/" method="post">
+
+    <label for="nom">Nom : </label>
+    <input id="votre_nom" type="text" name="nom" value="{{ user.nom }}">
+
+    <label for="prenom">Prenom : </label>
+    <input id="votre_prenom" type="text" name="prenom" value="{{ user.prenom }}">
+
+    <label for="email">email : </label>
+    <input id="votre_email" type="text" name="email" value="{{ user.email_user }}">
+
+    <label for="password">Mot de passe : </label>
+    <input id="votre_mdp" type="text" name="mdp" value="{{ user.password_user }}">
+
+    
+    <input type="submit" value="OK">
+</form>

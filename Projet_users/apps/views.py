@@ -3,7 +3,7 @@ from django.template import loader
 from django.shortcuts import render
 
 from .models import User, Sessions
-from .formulaire import form_log
+from django import forms
 
 def index (request):
     list_users = User.objects.all()
@@ -34,17 +34,20 @@ def detail (request, user_id):
     # list_sessions = user.sessions_set.all
     return render(request, 'apps/detail.html', {'users': users})
    # return HttpResponse('hello you are in the details page %s ' % user_id)
-    
-def get_name(request):
-    
+   
+def register(request):
     if request.method == 'POST':
-        form = form_log(request.POST)
-        if form.is_valid():
-
-            return HttpResponseRedirect('/Merci/')
-
-    # if a GET (or any other method) we'll create a blank form
+        user = User()
+        user.nom = request.post["nom"]
+        user.prenom = request.post["prenom"]
+        user.email_user = request.post["email"]
+        user.password_user = request.post["password"]
+        user.save()
+        return HttpResponse("voici la page d'inscription")
     else:
-        form = form_log()
+        return render(request, 'apps/register.html')
 
-    return render(request, 'inscription.html', {'form': form})
+def profil(request):
+    if request.method == 'POST':
+        user = User.objects.get(request.POST['nom'])
+        return HttpResponse("felicitation profil enregistré %s" %user)
