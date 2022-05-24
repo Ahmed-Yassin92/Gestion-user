@@ -1,8 +1,6 @@
 from msilib.schema import Class
 from django.db import models
 from django.utils import timezone
-from statistics import mode
-from django import forms
 
 
 
@@ -17,8 +15,3 @@ class User(models.Model):
 class Sessions (models.Model) :
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     create_date = models.DateField(default=timezone.now)
-
-class Consultant(models.Model):
-    email = forms.EmailField(label="Email")
-    password = forms.CharField(widget=forms.PasswordInput,label="Mot de passe")
-    
