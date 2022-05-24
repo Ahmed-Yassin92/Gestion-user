@@ -1,16 +1,20 @@
 <form action="/apps/connexion/" method="post">
 
-<label for="your_name">Your name: </label>
+<label for="your_name">Nom: </label>
+    <input id="your_name" type="text" name="your_name" maxlength="100" required>
+
+    <label for="your_name">Prenom: </label>
     <input id="your_name" type="text" name="your_name" maxlength="100" required>
 
 <label for="password">Mot de passe : </label>
     <input id="votre_mdp" type="text" name="mdp" value=" ">
+
 <input type="submit" value="Submit">
 </form>
 
 
-<form action="/your-name/" method="post">
-  
+<form action="/your_name/" method="post">
+{% csrf_token %}
     
 
 </form>

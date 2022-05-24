@@ -1,9 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
-from .models import User, Sessions
-from .forms import FormConnexion, NameForm
-from django.core.mail import send_mail
+from .models import User, Sessions, Consultant
+from .forms import FormConnexion
 
 
 
@@ -46,7 +45,7 @@ def connexion(request):
         form =FormConnexion(request.POST)
         if form.is_valid():
             
-            consultant=User.objects.get(email=form.cleaned_data['email'])
+            consultant= Consultant.objects.get(email=form.cleaned_data['email'])
           
             if(consultant.password == form.cleaned_data['password']):
                 url = "/"+str(consultant.idConsultant) + "/profil/"
@@ -75,5 +74,3 @@ def profil(request):
     if request.method == 'POST':
         user = User.objects.get(request.POST['nom'])
         return HttpResponse("felicitation profil enregistré %s" %user)
-    else:
-        return render(request, 'apps/register.html')
