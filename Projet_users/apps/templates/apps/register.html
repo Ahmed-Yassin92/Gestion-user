@@ -11,7 +11,8 @@
 
     <label for="password">Mot de passe : </label>
     <input id="votre_mdp" type="text" name="mdp" value="{{ user.password_user }}">
-
+<form action="/apps/profil/" method="post">
+{% csrf_token %}
     
     <input type="submit" value="OK">
 </form>

@@ -1,9 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
-
 from .models import User, Sessions
-from django import forms
+from .forms import FormConnexion, NameForm
+from django.core.mail import send_mail
+
+
 
 def index (request):
     list_users = User.objects.all()
@@ -34,7 +36,29 @@ def detail (request, user_id):
     # list_sessions = user.sessions_set.all
     return render(request, 'apps/detail.html', {'users': users})
    # return HttpResponse('hello you are in the details page %s ' % user_id)
-   
+
+def connexion(request):
+    context={
+         'form':'',
+        'message':'Bienvenue dans la page de connexion'
+    }
+    if request.method =="POST":
+        form =FormConnexion(request.POST)
+        if form.is_valid():
+            
+            consultant=User.objects.get(email=form.cleaned_data['email'])
+          
+            if(consultant.password == form.cleaned_data['password']):
+                url = "/"+str(consultant.idConsultant) + "/profil/"
+                return HttpResponseRedirect(url)
+    else:
+
+        form=FormConnexion()
+        context={
+            'form':form,
+            'message':'Bienvenue dans la page de connexion'
+        }
+
 def register(request):
     if request.method == 'POST':
         user = User()
@@ -45,9 +69,11 @@ def register(request):
         user.save()
         return HttpResponse("voici la page d'inscription")
     else:
-        return render(request, 'apps/register.html')
+        return render(request, 'apps/register.html')       
 
 def profil(request):
     if request.method == 'POST':
         user = User.objects.get(request.POST['nom'])
         return HttpResponse("felicitation profil enregistré %s" %user)
+    else:
+        return render(request, 'apps/register.html')
